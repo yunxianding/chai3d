@@ -446,7 +446,7 @@ int main(int argc, char* argv[])
     /////////////////////////////////////////////////////////////////////////
     // TEA POT
     /////////////////////////////////////////////////////////////////////////
-
+	/*
     // create a mesh
     cMesh* teaPot = new cMesh();
 
@@ -473,12 +473,76 @@ int main(int argc, char* argv[])
 
     // use display list to optimize graphic rendering performance
     teaPot->setUseDisplayList(true);
+	*/
+
+	/////////////////////////////////////////////////////////////////////////
+	// BOX
+	/////////////////////////////////////////////////////////////////////////
+
+	// create a mesh
+	cMesh* box = new cMesh();
+
+	// add object to world
+	base->addChild(box);
+
+	// build mesh using a box primitive
+	cCreateBox(box,
+		0.1,
+		0.1,
+		0.1,
+		cVector3d(0.0, 0.0, 0.0),
+		cMatrix3d(cDegToRad(0), cDegToRad(0), cDegToRad(-90), C_EULER_ORDER_XYZ)
+	);
+
+	// position object
+	box->setLocalPos(0.1, 0.2, 0.0);
+
+	// set material properties
+	box->m_material->setRedDark();
+	box->m_material->setStiffness(0.5 * maxStiffness);
+
+	// build collision detection tree
+	box->createAABBCollisionDetector(toolRadius);
+
+	// use display list to optimize graphic rendering performance
+	box->setUseDisplayList(true);
+
+	/////////////////////////////////////////////////////////////////////////
+	// SPHERE
+	/////////////////////////////////////////////////////////////////////////
+
+
+	// create a mesh
+	cMesh*  sphere = new cMesh();
+
+	// add object to world
+	base->addChild(sphere);
+
+	// build mesh using a sphere primitive
+	cCreateSphere(sphere,
+		0.05,
+		32,
+		32,
+		cVector3d(-0.05, -0.20, 0.0),
+		cMatrix3d(cDegToRad(0), cDegToRad(0), cDegToRad(170), C_EULER_ORDER_XYZ)
+	);
+
+	// set material properties
+	sphere->m_material->setBlueCornflower();
+	sphere->m_material->setStiffness(0.5 * maxStiffness);
+
+	// build collision detection tree
+	sphere->createAABBCollisionDetector(toolRadius);
+
+	// use display list to optimize graphic rendering performance
+	sphere->setUseDisplayList(true);
 
 
     /////////////////////////////////////////////////////////////////////////
     // CYLINDER
     /////////////////////////////////////////////////////////////////////////
 
+	/*
     // create a mesh
     cMesh*  cylinder = new cMesh();
 
@@ -505,7 +569,7 @@ int main(int argc, char* argv[])
 
     // use display list to optimize graphic rendering performance
     cylinder->setUseDisplayList(true);
-
+	*/
 
     /////////////////////////////////////////////////////////////////////////
     // CONE
@@ -540,7 +604,7 @@ int main(int argc, char* argv[])
 
     // use display list to optimize graphic rendering performance
     cone->setUseDisplayList(true);
-
+	
 
     /////////////////////////////////////////////////////////////////////////
     // SEGMENTS
@@ -614,8 +678,8 @@ int main(int argc, char* argv[])
     // assign shader to mesh objects in the world
     tool->setShaderProgram(shaderProgram);
     base->setShaderProgram(shaderProgram);
-    teaPot->setShaderProgram(shaderProgram);
-    cylinder->setShaderProgram(shaderProgram);
+    box->setShaderProgram(shaderProgram);
+    sphere->setShaderProgram(shaderProgram);
     cone->setShaderProgram(shaderProgram);
 
 
